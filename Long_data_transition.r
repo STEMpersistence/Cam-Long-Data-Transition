@@ -30,3 +30,9 @@ st %>% spread("Murder", "Frost", fill = NA, convert = FALSE)
 
 
 
+#This will do it!!!!
+data4$gradsem[which(data4$gradsem==1)] <- "fall"
+data4$gradsem[which(data4$gradsem==2)] <- "summer"
+data4$gradsem[which(data4$gradsem==3)] <- "spring"
+
+
