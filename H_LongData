@@ -1,0 +1,35 @@
+#read in data
+data1 <- read.csv("stem_persistence_share.csv")
+
+# Create df for data to be transformed to longitudenal
+longitudnal <- data1[,c(34:259)]
+longitudnal$studentID <- 1:57635      # creates new column assigning numbers to rows
+
+library(dplyr)
+library(tidyr)
+
+
+# This creates long data of the first two columns
+# need to do for every two columns (except for ID column)
+r=1
+column <-longitudnal[,r:(r+1)]
+column$ID <- 1:57635 
+column2 <- na.omit(column) # deletes row with person not enrolled for that semester
+column2$year <- substr(colnames(column2[1]), 12, 15)  # fills column with year
+
+# decides what camus student is in
+if (substr(colnames(column2[1]), 17, 17) == 1){
+  column2$campus <- "Main"
+} else if (substr(colnames(column2[1]), 17, 17) != 1){
+  column2$campus <- "Other"
+} 
+
+# decides what semester student is in
+if (substr(colnames(column2[1]), 16, 16) == 1){
+  column2$semester <- "Fall"
+} else if (substr(colnames(column2[1]), 16, 16) == 2){
+  column2$semester <- "Summer"
+} else if (substr(colnames(column2[1]), 16, 16) == 3){
+  column2$semester <- "Spring"
+}
+
