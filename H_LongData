@@ -33,3 +33,6 @@ if (substr(colnames(column2[1]), 16, 16) == 1){
   column2$semester <- "Spring"
 }
 
+# This line of code stores into mystemPer the data frame stemPer, minus the NA columns 
+mystemPer <- stemPer[,colSums(is.na(stemPer))<nrow(stemPer)]
+
