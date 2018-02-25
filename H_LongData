@@ -8,6 +8,10 @@ longitudnal$studentID <- 1:57635      # creates new column assigning numbers to 
 library(dplyr)
 library(tidyr)
 
+# WANNA CLEAR YOUR WORK SPACE?  
+rm(list = ls())
+
+
 
 # This creates long data of the first two columns
 # need to do for every two columns (except for ID column)
