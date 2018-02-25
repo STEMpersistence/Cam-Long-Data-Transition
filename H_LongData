@@ -9,52 +9,37 @@ library(dplyr)
 library(tidyr)
 
 # WANNA CLEAR YOUR WORK SPACE?  
-rm(list = ls())
+rm(list = ls()) # clears global environment
+cat("\014")  #clears console
 
 
 
-# This creates long data of the first four columns
-### (goes through loop twice)
-# need to do fix for next two columns
-r = 1
-#### FIXME: delete columns in longitudnal that have ALL NA values. Ehh not so sure...####
-long3 <- NULL
-while(r < 5){
-  
-  long <-longitudnal[,r:(r+1)]
-  long$ID <- 1:57635 
-  long2 <- na.omit(long) # deletes row with person not enrolled for that semester
-  long2$year <- substr(colnames(long2[1]), 12, 15)  # fills column with year
+# This creates long data of the first two columns
+# need to do for every two columns (except for ID column)
+r=1
+column <-longitudnal[,r:(r+1)]
+column$ID <- 1:57635 
+column2 <- na.omit(column) # deletes row with person not enrolled for that semester
+column2$year <- substr(colnames(column2[1]), 12, 15)  # fills column with year
 
-  # decides what camus student is in
-  if (substr(colnames(long2[1]), 17, 17) == 1){
-    long2$campus <- "Main"
-  } else if (substr(colnames(long2[1]), 17, 17) != 1){
-    long2$campus <- "Other"
-  } 
+# decides what camus student is in
+if (substr(colnames(column2[1]), 17, 17) == 1){
+  column2$campus <- "Main"
+} else if (substr(colnames(column2[1]), 17, 17) != 1){
+  column2$campus <- "Other"
+} 
 
-  # decides what semester student is in
-  if (substr(colnames(long2[1]), 16, 16) == 1){
-    long2$semester <- "Fall"
-  } else if (substr(colnames(long2[1]), 16, 16) == 2){
-    long2$semester <- "Summer"
-  } else if (substr(colnames(long2[1]), 16, 16) == 3){
-    long2$semester <- "Spring"
-  }
-  
-  colnames(long2)[1] <- "Major"
-  colnames(long2)[2] <- "GPR"
-  
-  
-  long3 <- rbind(long3, long2)
-  r = r+2
+# decides what semester student is in
+if (substr(colnames(column2[1]), 16, 16) == 1){
+  column2$semester <- "Fall"
+} else if (substr(colnames(column2[1]), 16, 16) == 2){
+  column2$semester <- "Summer"
+} else if (substr(colnames(column2[1]), 16, 16) == 3){
+  column2$semester <- "Spring"
 }
-
-
-
-
-
 
 # This line of code stores into mystemPer the data frame stemPer, minus the NA columns 
 mystemPer <- stemPer[,colSums(is.na(stemPer))<nrow(stemPer)]
 
+# Assign values to NA slots
+mystemPer[is.na(mystemPer)] <- 15
